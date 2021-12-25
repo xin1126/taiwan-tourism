@@ -1,0 +1,13 @@
+.card {
+  cursor: pointer;
+  .img {
+    overflow: hidden;
+  }
+  &:hover {
+    img {
+      transition: 0.5s;
+      filter: grayscale(50%);
+      transform: scale(1.2, 1.2);
+    }
+  }
+}

@@ -8,17 +8,17 @@
         <div class="navbar-collapse">
           <ul class="navbar-nav flex-row fw-bold">
             <li class="nav-item">
-              <router-link to="/attractions" class="nav-link"
+              <router-link to="/attractions" class="nav-link fs-5"
                 >探索景點</router-link
               >
             </li>
             <li class="nav-item">
-              <router-link to="/activity" class="nav-link link-primary ms-sm-2 ms-4"
+              <router-link to="/activity" class="nav-link link-primary ms-sm-2 ms-4 fs-5"
                 >節慶活動</router-link
               >
             </li>
             <li class="nav-item">
-              <router-link to="/delicacy" class="nav-link link-primary ms-sm-2 ms-4"
+              <router-link to="/delicacy" class="nav-link link-primary ms-sm-2 ms-4 fs-5"
                 >品嘗美食</router-link
               >
             </li>
