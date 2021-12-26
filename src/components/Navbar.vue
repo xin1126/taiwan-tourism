@@ -8,18 +8,30 @@
         <div class="navbar-collapse">
           <ul class="navbar-nav flex-row fw-bold">
             <li class="nav-item">
-              <router-link to="/attractions" class="nav-link fs-5"
-                >探索景點</router-link
+              <a
+                href="#"
+                class="nav-link fs-5"
+                :class="{ 'text-primary': type === 'ScenicSpot' }"
+                @click="search('ScenicSpot')"
+                >探索景點</a
               >
             </li>
             <li class="nav-item">
-              <router-link to="/activity" class="nav-link link-primary ms-sm-2 ms-4 fs-5"
-                >節慶活動</router-link
+              <a
+                href="#"
+                class="nav-link link-primary ms-sm-2 ms-4 fs-5"
+                :class="{ 'text-primary': type === 'Activity' }"
+                @click="search('Activity')"
+                >節慶活動</a
               >
             </li>
             <li class="nav-item">
-              <router-link to="/delicacy" class="nav-link link-primary ms-sm-2 ms-4 fs-5"
-                >品嘗美食</router-link
+              <a
+                href="#"
+                class="nav-link link-primary ms-sm-2 ms-4 fs-5"
+                :class="{ 'text-primary': type === 'Restaurant' }"
+                @click="search('Restaurant')"
+                >品嘗美食</a
               >
             </li>
           </ul>
@@ -32,12 +44,17 @@
 <script>
 import 'bootstrap/js/dist/collapse';
 
-export default {};
+export default {
+  methods: {
+    search(type) {
+      this.$store.dispatch('getData', { type, city: '' });
+      if (this.$route.path !== '/searchData') this.$router.push('/searchData');
+    },
+  },
+  computed: {
+    type() {
+      return this.$store.state.status.type;
+    },
+  },
+};
 </script>
-
-<style lang="scss" scoped>
-@import '@/assets/scss/all';
- .router-link-active {
-   color: $primary !important;
- }
-</style>

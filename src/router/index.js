@@ -13,20 +13,8 @@ const routes = [
         component: () => import('../views/Home.vue'),
       },
       {
-        path: 'activity',
-        component: () => import('../views/Activity.vue'),
-      },
-      {
-        path: 'attractions',
-        component: () => import('../views/Attractions.vue'),
-      },
-      {
-        path: 'delicacy',
-        component: () => import('../views/Delicacy.vue'),
-      },
-      {
-        path: 'delicacy',
-        component: () => import('../views/Delicacy.vue'),
+        path: 'searchData',
+        component: () => import('../views/SearchData.vue'),
       },
       {
         path: 'detailed/:id',
