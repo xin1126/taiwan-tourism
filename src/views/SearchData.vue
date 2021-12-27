@@ -15,12 +15,11 @@
     <template v-if="newData.length > 0">
       <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 g-4 mb-5">
         <div class="col" v-for="item in pageData.data" :key="item.ActivityID">
-          <div class="card h-100 shadow">
+          <div class="card h-100 shadow" @click="detailed(item, status.type)">
             <div
               class="img"
               v-if="
-                item.Picture.PictureUrl1 !== undefined &&
-                item.Picture.PictureUrl1.indexOf('https://www') >= 0
+                item.Picture.PictureUrl1 !== undefined
               "
             >
               <img
@@ -89,8 +88,8 @@
             :key="page"
             v-show="
               num >= 5 &&
-              num + 2 > page &&
-              num < page + 4 &&
+              num + 1 > page &&
+              num < page + 3 &&
               page !== 1 &&
               page <= pageData.totalPages - 2
             "
@@ -149,6 +148,8 @@
 
 <script>
 import { mapState } from 'vuex';
+import detailed from '../mixins/detailed';
+import newType from '../mixins/type';
 import tw from '../lib/index';
 
 export default {
@@ -157,6 +158,7 @@ export default {
       num: 1,
     };
   },
+  mixins: [detailed, newType],
   methods: {
     page(num) {
       this.num += num;
@@ -170,7 +172,7 @@ export default {
       let data = [];
       this.data.forEach((item) => {
         const key = item.Picture.PictureUrl1;
-        if (key !== undefined && key.indexOf('https://www') >= 0) {
+        if (key !== undefined && key.indexOf('http://') < 0) {
           data.unshift(item);
         } else {
           data.push(item);
@@ -189,22 +191,6 @@ export default {
       pagination.totalPages = Math.ceil(this.newData.length / 12);
       pagination.data = this.newData.length <= 9 ? this.newData : filterData;
       return pagination;
-    },
-    type() {
-      let type;
-      switch (this.status.type) {
-        case 'ScenicSpot':
-          type = '探索景點';
-          break;
-        case 'Activity':
-          type = '節慶活動';
-          break;
-        case 'Restaurant':
-          type = '品嘗美食';
-          break;
-        default:
-      }
-      return type;
     },
     city() {
       const data = tw.filter((item) => item.tag === this.status.city);

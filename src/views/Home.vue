@@ -2,16 +2,16 @@
   <main class="container">
     <div class="d-flex justify-content-between align-items-center">
       <h2 class="text-primary fw-bold"><i class="bi bi-flag-fill me-2"></i>熱門活動</h2>
-      <a href="#" class="fw-bold">查看更多熱門活動 <i class="bi bi-chevron-right"></i></a>
+      <a href="#" class="fw-bold" @click="search('Activity')">查看更多熱門活動 <i class="bi bi-chevron-right"></i></a>
     </div>
     <div class="row row-cols-sm-2 row-cols-1 g-3 mb-5">
       <div class="col" v-for="item in activity" :key="item.ActivityID">
-        <div class="card shadow">
+        <div class="card shadow" @click="detailed(item, 'Activity')">
           <div class="row g-0">
             <div class="col-md-5 img">
               <img
                 :src="item.Picture.PictureUrl1"
-                class="img-fluid rounded-start h-100"
+                class="img-fluid rounded-start h-sm-100"
                 :alt="item.Name"
               />
             </div>
@@ -37,7 +37,7 @@
     </div>
     <div class="d-flex justify-content-between align-items-center mb-2">
       <h2 class="text-primary fw-bold"><i class="bi bi-geo-alt-fill me-2"></i>熱門景點</h2>
-      <a href="#" class="fw-bold">查看更多熱門景點 <i class="bi bi-chevron-right"></i></a>
+      <a href="#" class="fw-bold" @click="search('ScenicSpot')">查看更多熱門景點 <i class="bi bi-chevron-right"></i></a>
     </div>
     <div
       v-if="attractions.length !== 0"
@@ -45,7 +45,7 @@
     >
       <div class="col">
         <div class="row g-2 g-sm-0 flex-sm-column h-100">
-          <div class="col attractions-img position-relative">
+          <div class="col attractions-img position-relative" @click="detailed(attractions[0], 'ScenicSpot')">
             <div
               class="position-absolute top-50 start-50 translate-middle text-white fw-bold fs-4 text-nowrap bg-translucent-black rounded-1 px-2 py-1 z-index"
             >
@@ -57,7 +57,7 @@
               class="pb-sm-2"
             />
           </div>
-          <div class="col attractions-img position-relative">
+          <div class="col attractions-img position-relative" @click="detailed(attractions[1], 'ScenicSpot')">
             <div
               class="position-absolute top-50 start-50 translate-middle text-white fw-bold fs-4 text-nowrap bg-translucent-black rounded-1 px-2 py-1 z-index"
             >
@@ -67,7 +67,7 @@
           </div>
         </div>
       </div>
-      <div class="col attractions-img position-relative h-auto">
+      <div class="col attractions-img position-relative h-auto" @click="detailed(attractions[2], 'ScenicSpot')">
         <div
           class="position-absolute top-50 start-50 translate-middle text-white fw-bold fs-4 text-nowrap bg-translucent-black rounded-1 px-2 py-1 z-index"
         >
@@ -77,7 +77,7 @@
       </div>
       <div class="col">
         <div class="row g-2 g-sm-0 flex-sm-column h-100">
-          <div class="col attractions-img position-relative">
+          <div class="col attractions-img position-relative" @click="detailed(attractions[3], 'ScenicSpot')">
             <div
               class="position-absolute top-50 start-50 translate-middle text-white fw-bold fs-4 text-nowrap bg-translucent-black rounded-1 px-2 py-1 z-index"
             >
@@ -89,7 +89,7 @@
               class="pb-sm-2"
             />
           </div>
-          <div class="col attractions-img position-relative">
+          <div class="col attractions-img position-relative" @click="detailed(attractions[4], 'ScenicSpot')">
             <div
               class="position-absolute top-50 start-50 translate-middle text-white fw-bold fs-4 text-nowrap bg-translucent-black rounded-1 px-2 py-1 z-index"
             >
@@ -102,11 +102,11 @@
     </div>
     <div class="d-flex justify-content-between align-items-center">
       <h2 class="text-primary fw-bold"><i class="bi bi-egg-fried me-2"></i>熱門美食</h2>
-      <a href="#" class="fw-bold">查看更多熱門美食 <i class="bi bi-chevron-right"></i></a>
+      <a href="#" class="fw-bold" @click="search('Restaurant')">查看更多熱門美食 <i class="bi bi-chevron-right"></i></a>
     </div>
     <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 g-4 mb-5">
       <div class="col" v-for="item in delicacy" :key="item.ActivityID">
-        <div class="card shadow">
+        <div class="card shadow" @click="detailed(item, 'Restaurant')">
           <div class="img">
             <img
               :src="item.Picture.PictureUrl1"
@@ -134,6 +134,8 @@
 </template>
 
 <script>
+import detailed from '../mixins/detailed';
+
 export default {
   data() {
     return {
@@ -142,8 +144,7 @@ export default {
       delicacy: [],
     };
   },
-  components: {
-  },
+  mixins: [detailed],
   methods: {
     async getActivity() {
       const res = await this.$api.get('/Activity?%24top=100&%24format=JSON');
@@ -154,7 +155,7 @@ export default {
       const res = await this.$api.get('/ScenicSpot?%24top=50&%24format=JSON');
       const filterData = res.filter((item) => {
         const data = item.Picture.PictureUrl1;
-        return data !== undefined && data.indexOf('https://www') >= 0 && item.Name.length < 6;
+        return data !== undefined && data.indexOf('http://') < 0 && item.Name.length < 6;
       });
       this.attractions = filterData.sort(() => Math.random() - 0.5).slice(-5);
     },
@@ -165,6 +166,10 @@ export default {
         return data !== undefined && item.Description.length <= 15;
       });
       this.delicacy = filterData.sort(() => Math.random() - 0.5).slice(-8);
+    },
+    search(type) {
+      this.$store.dispatch('getData', { type, city: '' });
+      if (this.$route.path !== '/searchData') this.$router.push('/searchData');
     },
   },
   created() {

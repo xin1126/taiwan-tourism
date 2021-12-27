@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     data: [],
+    detailed: [],
     status: {},
   },
   actions: {
@@ -24,6 +25,9 @@ export default new Vuex.Store({
     },
     getStatus(state, data) {
       state.status = data;
+    },
+    getDetailed(state, data) {
+      state.detailed = data;
     },
   },
   modules: {

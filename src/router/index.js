@@ -17,7 +17,7 @@ const routes = [
         component: () => import('../views/SearchData.vue'),
       },
       {
-        path: 'detailed/:id',
+        path: 'detailed',
         component: () => import('../views/Detailed.vue'),
       },
       {

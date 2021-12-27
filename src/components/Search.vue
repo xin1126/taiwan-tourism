@@ -81,6 +81,11 @@ export default {
       this.$store.dispatch('getData', { type: this.type, city: this.city, str: this.str });
       if (this.$route.path !== '/searchData' && this.type !== '') this.$router.push('/searchData');
     },
+    reset() {
+      this.type = '';
+      this.city = '';
+      this.str = '';
+    },
   },
   mounted() {
     this.tooltip = new Tooltip(this.$refs.tooltip);
@@ -92,13 +97,12 @@ export default {
   },
   watch: {
     newType() {
+      this.reset();
       this.type = this.newType;
     },
     $route() {
       if (this.$route.path === '/') {
-        this.type = '';
-        this.city = '';
-        this.str = '';
+        this.reset();
         this.$store.dispatch('getData', { type: '' });
       }
     },
