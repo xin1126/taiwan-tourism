@@ -12,12 +12,12 @@
               <img
                 :src="item.Picture.PictureUrl1"
                 class="img-fluid rounded-start h-sm-100"
-                :alt="item.Name"
+                :alt="item.ActivityName"
               />
             </div>
             <div class="col-md-7">
               <div class="card-body">
-                <h5 class="card-title fw-bold">{{ item.Name }}</h5>
+                <h5 class="card-title fw-bold">{{ item.ActivityName }}</h5>
                 <p class="card-text activity-text text-gray mb-2">
                   {{ item.Description }}
                 </p>
@@ -49,11 +49,11 @@
             <div
               class="position-absolute top-50 start-50 translate-middle text-white fw-bold fs-4 text-nowrap bg-translucent-black rounded-1 px-2 py-1 z-index"
             >
-              {{ attractions[0].Name }}
+              {{ attractions[0].ScenicSpotName }}
             </div>
             <img
               :src="attractions[0].Picture.PictureUrl1"
-              :alt="attractions[0].Name"
+              :alt="attractions[0].ScenicSpotName"
               class="pb-sm-2"
             />
           </div>
@@ -61,9 +61,9 @@
             <div
               class="position-absolute top-50 start-50 translate-middle text-white fw-bold fs-4 text-nowrap bg-translucent-black rounded-1 px-2 py-1 z-index"
             >
-              {{ attractions[1].Name }}
+              {{ attractions[1].ScenicSpotName }}
             </div>
-            <img :src="attractions[1].Picture.PictureUrl1" :alt="attractions[1].Name" />
+            <img :src="attractions[1].Picture.PictureUrl1" :alt="attractions[1].ScenicSpotName" />
           </div>
         </div>
       </div>
@@ -71,9 +71,9 @@
         <div
           class="position-absolute top-50 start-50 translate-middle text-white fw-bold fs-4 text-nowrap bg-translucent-black rounded-1 px-2 py-1 z-index"
         >
-          {{ attractions[2].Name }}
+          {{ attractions[2].ScenicSpotName }}
         </div>
-        <img :src="attractions[2].Picture.PictureUrl1" :alt="attractions[2].Name" />
+        <img :src="attractions[2].Picture.PictureUrl1" :alt="attractions[2].ScenicSpotName" />
       </div>
       <div class="col">
         <div class="row g-2 g-sm-0 flex-sm-column h-100">
@@ -81,11 +81,11 @@
             <div
               class="position-absolute top-50 start-50 translate-middle text-white fw-bold fs-4 text-nowrap bg-translucent-black rounded-1 px-2 py-1 z-index"
             >
-              {{ attractions[3].Name }}
+              {{ attractions[3].ScenicSpotName }}
             </div>
             <img
               :src="attractions[3].Picture.PictureUrl1"
-              :alt="attractions[3].Name"
+              :alt="attractions[3].ScenicSpotName"
               class="pb-sm-2"
             />
           </div>
@@ -93,9 +93,9 @@
             <div
               class="position-absolute top-50 start-50 translate-middle text-white fw-bold fs-4 text-nowrap bg-translucent-black rounded-1 px-2 py-1 z-index"
             >
-              {{ attractions[4].Name }}
+              {{ attractions[4].ScenicSpotName }}
             </div>
-            <img :src="attractions[4].Picture.PictureUrl1" :alt="attractions[4].Name" />
+            <img :src="attractions[4].Picture.PictureUrl1" :alt="attractions[4].ScenicSpotName" />
           </div>
         </div>
       </div>
@@ -112,11 +112,11 @@
               :src="item.Picture.PictureUrl1"
               class="card-img-top"
               style="height: 200px"
-              :alt="item.Name"
+              :alt="item.RestaurantName"
             />
           </div>
           <div class="card-body">
-            <h5 class="card-title fw-bold">{{ item.Name }}</h5>
+            <h5 class="card-title fw-bold">{{ item.RestaurantName }}</h5>
             <p class="card-text text-gray mb-2">
               {{ item.Description }}
             </p>
@@ -155,7 +155,7 @@ export default {
       const res = await this.$api.get('/ScenicSpot?%24top=50&%24format=JSON');
       const filterData = res.filter((item) => {
         const data = item.Picture.PictureUrl1;
-        return data !== undefined && data.indexOf('http://') < 0 && item.Name.length < 6;
+        return data !== undefined && data.indexOf('http://') < 0 && item.ScenicSpotName.length < 6;
       });
       this.attractions = filterData.sort(() => Math.random() - 0.5).slice(-5);
     },

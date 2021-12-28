@@ -5,18 +5,18 @@
         <li class="breadcrumb-item"><router-link to="/">首頁</router-link></li>
         <li class="breadcrumb-item active" aria-current="page">{{ type }}</li>
         <li class="breadcrumb-item active" aria-current="page" v-show="detailed.City !== undefined">{{ detailed.City }}</li>
-        <li class="breadcrumb-item active d-none d-sm-block" aria-current="page">{{ detailed.Name }}</li>
+        <li class="breadcrumb-item active d-none d-sm-block" aria-current="page">{{ detailed[newName] }}</li>
       </ol>
     </nav>
     <div class="img mb-4" v-if="detailed.Picture.PictureUrl1 !== undefined">
       <img
         class="w-100 rounded-3"
         :src="detailed.Picture.PictureUrl1"
-        :alt="detailed.Name"
+        :alt="detailed[newName]"
       />
     </div>
     <div v-else class="text-center">未提供圖檔</div>
-    <h2 class="fw-bold mb-3">{{ detailed.Name }}</h2>
+    <h2 class="fw-bold mb-3">{{ detailed[newName] }}</h2>
     <p class="mb-4">{{ detailed.Description }}</p>
     <div class="row mb-4">
       <div class="col-sm-6 bg-white p-3 rounded-3 mb-sm-0 mb-4">
@@ -72,6 +72,9 @@ export default {
   },
   computed: {
     ...mapState(['detailed', 'status']),
+    newName() {
+      return `${this.status.type}Name`;
+    },
   },
 };
 </script>

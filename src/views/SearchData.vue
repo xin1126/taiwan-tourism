@@ -26,7 +26,7 @@
                 :src="item.Picture.PictureUrl1"
                 class="card-img-top"
                 style="height: 200px"
-                :alt="item.Name"
+                :alt="item[newName]"
               />
             </div>
             <div
@@ -37,7 +37,7 @@
               未提供圖檔
             </div>
             <div class="card-body d-flex flex-column justify-content-between h-25">
-              <h5 class="card-title fw-bold">{{ item.Name }}</h5>
+              <h5 class="card-title fw-bold">{{ item[newName] }}</h5>
               <div>
                 <span class="badge bg-secondary me-2">{{ item.Class1 }}</span
                 ><span class="badge bg-secondary">{{ item.Class2 }}</span>
@@ -178,8 +178,8 @@ export default {
           data.push(item);
         }
       });
-      if (this.status.str !== '') {
-        data = data.filter((item) => item.Name.match(this.status.str));
+      if (this.status.str !== undefined) {
+        data = data.filter((item) => item[this.newName].match(this.status.str));
       }
       return data;
     },
@@ -195,6 +195,9 @@ export default {
     city() {
       const data = tw.filter((item) => item.tag === this.status.city);
       return data[0]?.place;
+    },
+    newName() {
+      return `${this.status.type}Name`;
     },
   },
   watch: {
