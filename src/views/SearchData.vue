@@ -46,7 +46,7 @@
                     <i class="bi bi-geo-alt-fill me-1"></i>{{ item.City }}
                   </p>
                   <a href="#" class="card-text text-danger"
-                    >美食詳情 <i class="bi bi-chevron-right"></i
+                    >{{ type.substr(2, 3) }}詳情 <i class="bi bi-chevron-right"></i
                   ></a>
                 </div>
               </div>
