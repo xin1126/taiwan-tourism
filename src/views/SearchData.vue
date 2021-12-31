@@ -179,7 +179,7 @@ export default {
         }
       });
       if (this.status.str !== undefined) {
-        data = data.filter((item) => item[this.newName].match(this.status.str));
+        data = data.filter((item) => item[this.newName]?.match(this.status.str));
       }
       return data;
     },

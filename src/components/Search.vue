@@ -94,10 +94,13 @@ export default {
     newType() {
       return this.$store.state.status.type;
     },
+    newCity() {
+      return this.$store.state.status.city;
+    },
   },
   watch: {
     newType() {
-      this.reset();
+      if (this.newCity === '') this.reset();
       this.type = this.newType;
     },
     $route() {
